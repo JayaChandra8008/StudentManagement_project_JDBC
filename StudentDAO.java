@@ -90,81 +90,80 @@ public class StudentDAO
 		}
 	}
 //	/*------------------Method for fetching all student list-----------*/
-//	/*----- Method for fetching all student List -----*/
-//	public ArrayList<StudentEntities> getStudentList()
-//	{
-//		/*---- creating blank student list ---*/
-//		ArrayList<StudentEntities> studentList=new ArrayList<StudentEntities>();
-//		try
-//		{
-//			/*------------------------------------------------*/
-//			Connection con=StudentUtility.getConnection();
-//			/*----- Creating Statement -----*/
-//			Statement stmt=con.createStatement();
-//			/*---- executing query ----*/
-//			ResultSet result=stmt.executeQuery("select * from student");
-//			/*---- Traversing result set -----*/
-//			while(result.next())
-//			{
-//				/*--- Creating student object -----*/
-//				StudentEntities student=new StudentEntities();
-//				/*--- setting data into student object from result set -----*/
-//				student.setStdId(result.getInt("stdid")); //From Student entity class
-//				student.setStdName(result.getString("stdname"));
-//				student.setStdAge(result.getInt("age"));
-//				student.setStdAddress(result.getString("address"));
-//				/*-----------------------------------------------*/
-//				/*---- Inserting this student into student list -----*/
-//				studentList.add(student);
-//			}
-//			/*--- return the Array list ----*/
-//			return studentList;
-//		}
-//		catch (SQLException e)
-//		{
-//			System.out.println(e);
-//			return studentList;
-//		}
-//	}
-//	
+	/*----- Method for fetching all student List -----*/
+	public ArrayList<StudentEntities> getStudentList()
+	{
+		/*---- creating blank student list ---*/
+		ArrayList<StudentEntities> studentList=new ArrayList<StudentEntities>();
+		try
+		{
+			/*------------------------------------------------*/
+			Connection con=StudentUtility.getConnection();
+			/*----- Creating Statement -----*/
+			Statement stmt=con.createStatement();
+			/*---- executing query ----*/
+			ResultSet resultSetObj=stmt.executeQuery("select * from student");
+			/*---- Traversing result set -----*/
+			while(resultSetObj.next())
+			{
+				/*--- Creating student object -----*/
+				StudentEntities studentEntitiesObj=new StudentEntities();
+				/*--- setting data into student object from result set -----*/
+				studentEntitiesObj.setStdId(resultSetObj.getInt("stdId")); //From Student entity class
+				studentEntitiesObj.setStdName(resultSetObj.getString("studentName"));  
+				studentEntitiesObj.setStdAge(resultSetObj.getInt("stdAge"));
+				studentEntitiesObj.setStdAddress(resultSetObj.getString("StdAddress"));
+				/*-----------------------------------------------*/
+				/*---- Inserting this student into student list -----*/
+				studentList.add(studentEntitiesObj);
+			}
+			/*--- return the Array list ----*/
+			return studentList;
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+			return studentList;
+		}
+	}
 //	/*----- Method for fetching student List of particular standard -----*/
-//	public ArrayList<StudentEntities> getStudentListAgeWise(int stdAge)
-//	{
-//		/*---- creating blank student list ---*/
-//		ArrayList<StudentEntities> studentList=new ArrayList<StudentEntities>();
-//		try
-//		{
-//			/*------------------------------------------------*/
-//			Connection conRef=StudentUtility.getConnection();
-//			/*----- Creating Statement -----*/
-//			PreparedStatement stmtRef=conRef.prepareStatement("select * from student where stdAge = ?");
-//			/*---- Setting data into query parameter ------*/
-//			stmtRef.setInt(1, stdAge);
-//			/*---- executing query ----*/
-//			ResultSet resultSetObj=stmtRef.executeQuery();
-//			/*---- Traversing result set -----*/
-//			while(resultSetObj.next())
-//			{
-//				/*--- Creating student object -----*/
-//				StudentEntities student=new StudentEntities();
-//				/*--- setting data into student object from resultset -----*/
-//				student.setStdId(resultSetObj.getInt("stdid")); //From Student entity class
-//				student.setStdName(resultSetObj.getString("stdname"));
-//				student.setStdAge(resultSetObj.getInt("age"));
-//				student.setStdAddress(resultSetObj.getString("address"));
-//				/*-----------------------------------------------*/
-//				/*---- Inserting this student into student list -----*/
-//				studentList.add(student);
-//			}
-//			/*--- return the Array list ----*/
-//			return studentList;
-//		}
-//		catch (SQLException e)
-//		{
-//			System.out.println(e);
-//			return studentList;
-//		}
-//	}
+	public ArrayList<StudentEntities> getStudentListAgeWise(int stdAge)
+	{
+		/*---- creating blank student list and Object for Array List ---*/
+		ArrayList<StudentEntities> studentList=new ArrayList<StudentEntities>();
+		try
+		{
+			/*------------------------------------------------*/
+			Connection conRef=StudentUtility.getConnection();
+			/*----- Creating Statement -----*/
+			PreparedStatement stmtRef=conRef.prepareStatement("select * from student where stdAge = ?");
+			/*---- Setting data into query parameter ------*/
+			stmtRef.setInt(1, stdAge);
+			/*---- executing query ----*/
+			ResultSet resultSetObj=stmtRef.executeQuery();
+			/*---- Traversing result set -----*/
+			while(resultSetObj.next())
+			{
+				/*--- Creating student object -----*/
+				StudentEntities studentEntitiesObj=new StudentEntities();
+				/*--- setting data into student object from resultset -----*/
+				studentEntitiesObj.setStdId(resultSetObj.getInt("stdId")); //From Student entity class
+				studentEntitiesObj.setStdName(resultSetObj.getString("studentName"));
+				studentEntitiesObj.setStdAge(resultSetObj.getInt("stdAge"));
+				studentEntitiesObj.setStdAddress(resultSetObj.getString("StdAddress"));
+				/*-----------------------------------------------*/
+				/*---- Inserting this student into student list -----*/
+				studentList.add(studentEntitiesObj);
+			}
+			/*--- return the Array list ----*/
+			return studentList;
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+			return studentList;
+		}
+	}
 //	/*----- Method for fetching details of Particular Student -----*/
 	public StudentEntities getStudentDetailsById(int stdId) 
 	{
