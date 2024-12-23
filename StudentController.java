@@ -1,5 +1,6 @@
 package com.databasemanagament.studentmanagment.controller;
 import com.databasemanagament.studentmanagment.services.*;
+
 import com.databasemanagament.studentmanagment.servicesimplementation.*;
 import com.databasemanagament.studentmanagment.entity.*;
 
@@ -33,9 +34,9 @@ public class StudentController
 			System.out.println("1. Register New Student");
 			System.out.println("2. Update Standard, Age and Roll Number");
 			System.out.println("3. Update Address");
-//			System.out.println("4. Display All Student");
-		//	System.out.println("5. Display Student List Standard wise");
-			System.out.println("4. Display Details of One Student");
+			System.out.println("4. Display All Student");
+			System.out.println("5. Display Student List Age wise");
+			System.out.println("6. Display Details of One Student ID wise");
 			System.out.println("--------------------------------------------");
 			/*----- Asking user to select any one operation ------*/
 			System.out.print("Select any one operation : ");
@@ -50,7 +51,11 @@ public class StudentController
 			break;
 			case 3: updateStudentAddress();
 			break;
-			case 4: getStudentDetailsById();
+			case 4: getStudentList();
+			break;
+			case 5: getStudentListAgeWise();
+			break;
+			case 6: getStudentDetailsById();
 			break;
 			default: System.out.println("Invalid selection");
 			}
@@ -73,6 +78,7 @@ public class StudentController
 		
 		System.out.print("Student Id : ");
 		int sId = Integer.parseInt(br.readLine());
+		
 		System.out.print("age : ");
 		int sAge = Integer.parseInt(br.readLine());
 		
@@ -81,7 +87,7 @@ public class StudentController
 		
 		System.out.println("---------------------------------------------------");
 		/*----------------------Creating Student object ------------------------*/
-		StudentEntities student = new StudentEntities(sName, sId, sAge, sAddress);
+		StudentEntities student = new StudentEntities(sName, sAge, sId, sAddress);
 		/*------- Calling service layer to register student -----*/
 		int row = studentserviceObj.insertStudent(student);
 		if(row > 0)
@@ -148,26 +154,53 @@ public class StudentController
 		}
 	}
 	/*4---- Method to Retrieve all student data -----*/
-//	public void getStudentList()
-//	{
-//		/*---- calling service layer to retrieve all student data -----*/
-//		ArrayList<StudentEntities> studentArrayList=studentserviceObj.getStudentList();
-//		if(studentArrayList.size() > 0)
-//		{
-//			/*---- Record found -----*/
-//			System.out.println("------------ Student List ------------");
-//			for (StudentEntities studentEntityObj : studentArrayList) 
-//			{
-//				System.out.println(studentEntityObj);
-//			}
-//		}
-//		else
-//		{
-//			/*--- no record found ----*/
-//			System.out.println("No record found ");
-//		}
-//	}
-	/*4---- Method to Retreive data by ID of student ----*/
+	public void getStudentList()
+	{
+		/*---- calling service layer to retrieve all student data -----*/
+		ArrayList<StudentEntities> studentArrayList=studentserviceObj.getStudentList();
+		if(studentArrayList.size() > 0)
+		{
+			/*---- Record found -----*/
+			System.out.println("------------ Student List ------------");
+			for (StudentEntities studentEntityObj : studentArrayList) 
+			{
+				System.out.println(studentEntityObj);
+			}
+		}
+		else
+		{
+			/*--- no record found ----*/
+			System.out.println("No record found ");
+		}
+	}
+	/*5---- Method to Retrieve all student data -----*/
+	public void getStudentListAgeWise()throws IOException
+	{
+		/*--- Input of standard through keyboard ----*/
+		System.out.print("Enter Age : ");
+		int sAge = Integer.parseInt(br.readLine());
+		/*---- calling service layer to retrieve all student data -----*/
+		ArrayList<StudentEntities> studentList=studentserviceObj.getStudentListAgeWise(sAge);
+		if(studentList.size() > 0)
+		{
+			/*---- Record found -----*/
+			System.out.println("------------ Student List for Standard : "+sAge+ "------------");
+			for (StudentEntities studentEntitiesObj : studentList) 
+			{
+				System.out.println("Student Id : "+studentEntitiesObj.getStdId());
+				System.out.println("Name : "+studentEntitiesObj.getStdName());
+				System.out.println("Age : "+studentEntitiesObj.getStdAge()+" year");
+				System.out.println("Address : "+studentEntitiesObj.getStdAddress());
+				System.out.println("-------------------------------------------");
+			}
+		}
+		else
+		{
+			/*--- no record found ----*/
+			System.out.println("No record found ");
+		}
+	}
+	/*6---- Method to Retrieve data by ID of student ----*/
 	public void getStudentDetailsById() throws IOException //Method name should be same as DAO class Methods
 	{
 		/*----------------- Receiving data from User through keyboard------------------------*/
