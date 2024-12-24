@@ -15,6 +15,7 @@ public class ServiceImplementation implements StudentService
     {
         studentDao = new StudentDAO();
     }
+    /*Use methods that are created in Controller class and return from DAO class using same name methods*/
     /*-------------------------1-----------------------------------*/
     public int insertStudent(StudentEntities studentEntityObj) 
     {
